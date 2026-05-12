@@ -399,6 +399,75 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === 'Escape') closeModal();
     });
 
+    // --- Scroll to Top Logic ---
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
+    if (scrollTopBtn) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                scrollTopBtn.classList.add('active');
+            } else {
+                scrollTopBtn.classList.remove('active');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
+
+    // --- AJAX Form Submission ---
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerText;
+            submitBtn.innerText = 'Sending...';
+            submitBtn.style.opacity = '0.7';
+            submitBtn.disabled = true;
+
+            const formData = new FormData(contactForm);
+
+            // Using Formsubmit's AJAX endpoint
+            fetch('https://formsubmit.co/ajax/deepaksomawat7777@gmail.com', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    submitBtn.innerText = 'Message Sent Successfully! ✓';
+                    submitBtn.style.background = '#00c853'; // Success color
+                    submitBtn.style.opacity = '1';
+                    contactForm.reset();
+                    
+                    setTimeout(() => {
+                        submitBtn.innerText = originalText;
+                        submitBtn.style.background = ''; // Revert to original
+                        submitBtn.disabled = false;
+                    }, 4000);
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            })
+            .catch(error => {
+                submitBtn.innerText = 'Error! Please try again.';
+                submitBtn.style.background = '#ff3333';
+                submitBtn.style.opacity = '1';
+                
+                setTimeout(() => {
+                    submitBtn.innerText = originalText;
+                    submitBtn.style.background = '';
+                    submitBtn.disabled = false;
+                }, 4000);
+            });
+        });
+    }
+
 });
 
 

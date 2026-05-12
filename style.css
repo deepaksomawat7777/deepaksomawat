@@ -1380,6 +1380,8 @@ footer {
 .project-link-btn {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
+    flex: 1;
     gap: 6px;
     padding: 8px 18px;
     border-radius: 50px;
@@ -1510,4 +1512,38 @@ footer {
     gap: 8px;
     padding: 12px 28px;
     font-size: 0.95rem;
+}
+
+/* Scroll to Top Button */
+.scroll-top-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: var(--gradient-main);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 242, 255, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: var(--transition-smooth);
+    z-index: 1000;
+}
+
+.scroll-top-btn.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.scroll-top-btn:hover {
+    box-shadow: 0 6px 20px rgba(0, 242, 255, 0.5);
+    transform: translateY(-5px);
 }
